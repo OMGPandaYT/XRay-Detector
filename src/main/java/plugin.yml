@@ -1,0 +1,15 @@
+main: me.jxydev.xraydetector.XRD
+name: xraydetector
+version: 1.0.0
+api-version: 1.17
+
+
+commands:
+   alerts:
+      description: Toggle alerts on and off
+      usage: /<command>
+      permission: xrd.notify
+   notify:
+      description: Toggle notifications on and off
+      usage: /<command>
+      permission: xrd.notify
