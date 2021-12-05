@@ -5,10 +5,18 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.jxydev.xraydetector.checks.impl.*;
-import me.jxydev.xraydetector.command.*;
-import me.jxydev.xraydetector.data.*;
-import me.jxydev.xraydetector.listeners.impl.*;
+import me.jxydev.xraydetector.checks.Check;
+import me.jxydev.xraydetector.checks.CheckManager;
+import me.jxydev.xraydetector.checks.impl.MineNotify;
+import me.jxydev.xraydetector.checks.impl.MinePattern;
+import me.jxydev.xraydetector.checks.impl.MineSight;
+import me.jxydev.xraydetector.command.AlertCommand;
+import me.jxydev.xraydetector.command.NotifyCommand;
+import me.jxydev.xraydetector.data.PlayerData;
+import me.jxydev.xraydetector.data.PlayerDataManager;
+import me.jxydev.xraydetector.listeners.impl.BlockBreakListener;
+import me.jxydev.xraydetector.listeners.impl.ConnectionListener;
+import me.jxydev.xraydetector.listeners.impl.MoveListener;
 import net.md_5.bungee.api.ChatColor;
 
 public class XRD extends JavaPlugin {
@@ -21,14 +29,6 @@ public class XRD extends JavaPlugin {
 	public void onEnable() {
 		
 		instance = this;
-		
-		log("Loading listeners...");
-		
-		getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
-		getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
-		getServer().getPluginManager().registerEvents(new MoveListener(), this);
-		
-		log("Listeners loaded.");
 		
 		log("Setting up configuration...");
 		
@@ -43,6 +43,19 @@ public class XRD extends JavaPlugin {
 		loadChecks(config);
 		
 		log("Checks loaded.");
+		
+		log("Loading listeners...");
+		
+		getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+		getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
+		for(Object c : CheckManager.getRegisteredChecks()) 
+			if(((Check)c).move) {
+				getServer().getPluginManager().registerEvents(new MoveListener(), this);
+				break;
+			}
+		
+		
+		log("Listeners loaded.");
 		
 		log("Loading commands...");
 		

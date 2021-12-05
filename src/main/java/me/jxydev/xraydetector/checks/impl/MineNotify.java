@@ -10,7 +10,7 @@ import me.jxydev.xraydetector.events.impl.XRDBlockBreak;
 public class MineNotify extends Check {
 
 	public MineNotify(FileConfiguration config) {
-		super("MineNotify", false, config);
+		super("MineNotify", false, config, false);
 	}
 		
 	public void onEvent(Event e) {

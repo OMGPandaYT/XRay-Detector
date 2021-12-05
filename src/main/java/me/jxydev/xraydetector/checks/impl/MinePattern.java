@@ -17,7 +17,7 @@ public class MinePattern extends Check {
 	
 	public MinePattern(FileConfiguration config) {
 		
-		super("MinePattern", true, config);
+		super("MinePattern", true, config, false);
 		
 		raycastLength = config.getDouble(path + "raycast-length");
 		

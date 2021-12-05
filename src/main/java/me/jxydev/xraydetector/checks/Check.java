@@ -10,11 +10,12 @@ import me.jxydev.xraydetector.events.Event;
 public class Check {
 
 	protected String path;
+	public boolean move;
 	
-	public Check(String name, boolean alert, FileConfiguration config) {
+	public Check(String name, boolean alert, FileConfiguration config, boolean move) {
 		
 		path = "checks." + (alert ? "alerts" : "notify") + "." + name.toLowerCase() + ".";
-		
+		this.move = move;
 		if(config.getBoolean(path + "enabled"))
 			CheckManager.registerCheck(this);
 		

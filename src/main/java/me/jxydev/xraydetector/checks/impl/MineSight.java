@@ -24,7 +24,7 @@ public class MineSight extends Check {
 	
 	public MineSight(FileConfiguration config) {
 		
-		super("MineSight", true, config);
+		super("MineSight", true, config, true);
 		
 		lookDifference = config.getDouble(path + "look-difference");
 		lookTime = config.getDouble(path + "look-time");
