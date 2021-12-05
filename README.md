@@ -12,3 +12,5 @@ Mine Pattern - Checks if someone's mining patterns is heading straight towards d
 Mine Sight - Checks if someone is using X-Ray by summoning a villager near them and seeing if they look through the walls!
 
 NOTICE: This is a beta version and has many bugs! Please don't review showing issues, I will fix them on later updates. Current version can be used but beware of some falses!
+
+SPIGOT PAGE: https://www.spigotmc.org/resources/x-ray-detector.98131/
