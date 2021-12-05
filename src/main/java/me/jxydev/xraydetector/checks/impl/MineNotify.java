@@ -1,6 +1,6 @@
 package me.jxydev.xraydetector.checks.impl;
 
-import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import me.jxydev.xraydetector.checks.Check;
 import me.jxydev.xraydetector.data.PlayerData;
@@ -9,6 +9,10 @@ import me.jxydev.xraydetector.events.impl.XRDBlockBreak;
 
 public class MineNotify extends Check {
 
+	public MineNotify(FileConfiguration config) {
+		super("MineNotify", false, config);
+	}
+		
 	public void onEvent(Event e) {
 		
 		if(e instanceof XRDBlockBreak) {
@@ -19,7 +23,7 @@ public class MineNotify extends Check {
 			
 			if(q.lastBlockBroken == null) {block(bb);return;}
 
-			if(bb.event.getBlock().getType() == Material.DIAMOND_ORE) {
+			if(isDiamond(bb.event.getBlock().getType())) {
 				q.diamondsMined++;
 			}
 			

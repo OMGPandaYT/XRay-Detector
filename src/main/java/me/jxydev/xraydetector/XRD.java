@@ -1,19 +1,14 @@
 package me.jxydev.xraydetector;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.jxydev.xraydetector.checks.impl.MineNotify;
-import me.jxydev.xraydetector.checks.impl.MinePattern;
-import me.jxydev.xraydetector.checks.impl.MineSight;
-import me.jxydev.xraydetector.command.AlertCommand;
-import me.jxydev.xraydetector.command.NotifyCommand;
-import me.jxydev.xraydetector.data.PlayerData;
-import me.jxydev.xraydetector.data.PlayerDataManager;
-import me.jxydev.xraydetector.listeners.impl.BlockBreakListener;
-import me.jxydev.xraydetector.listeners.impl.ConnectionListener;
-import me.jxydev.xraydetector.listeners.impl.MoveListener;
+import me.jxydev.xraydetector.checks.impl.*;
+import me.jxydev.xraydetector.command.*;
+import me.jxydev.xraydetector.data.*;
+import me.jxydev.xraydetector.listeners.impl.*;
 import net.md_5.bungee.api.ChatColor;
 
 public class XRD extends JavaPlugin {
@@ -30,14 +25,22 @@ public class XRD extends JavaPlugin {
 		log("Loading listeners...");
 		
 		getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
-		getServer().getPluginManager().registerEvents(new MoveListener(), this);
 		getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
+		getServer().getPluginManager().registerEvents(new MoveListener(), this);
 		
 		log("Listeners loaded.");
 		
+		log("Setting up configuration...");
+		
+		FileConfiguration config = getConfig();
+		
+		this.saveDefaultConfig();
+		
+		log("Configuration setup.");
+		
 		log("Loading checks...");
 		
-		loadChecks();
+		loadChecks(config);
 		
 		log("Checks loaded.");
 		
@@ -52,9 +55,7 @@ public class XRD extends JavaPlugin {
 		
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			
-			PlayerDataManager.createPlayer(p);
-			
-			PlayerData pd = PlayerDataManager.getPlayer(p);
+			PlayerData pd = PlayerDataManager.createPlayer(p);
 			
 			boolean perm = p.hasPermission("xrd.notify");
 			
@@ -75,12 +76,12 @@ public class XRD extends JavaPlugin {
 		
 	}
 	
-	public void loadChecks() {
+	public void loadChecks(FileConfiguration config) {
 		
-		new MineNotify();
+		new MineNotify(config);
 		
-		new MinePattern();
-		new MineSight();
+		new MinePattern(config);
+		new MineSight(config);
 		
 	}
 	

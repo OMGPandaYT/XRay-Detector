@@ -1,0 +1,43 @@
+
+# Configuration for the X-Ray checks
+checks:
+
+   # Alert checks, these checks are ones you might want to check on people for flagging.
+   alerts:
+   
+      # Checks if someones mining diagonally perfect to diamonds, this can false sometimes, but not too often
+      minepattern:
+      
+         # Check enabled?
+         enabled: true
+         
+         # How far to check for diamonds
+         raycast-length: 10
+         
+      # Checks when someone mines diamonds, and summons a villager near them and checks if they try to look at them
+      minesight:
+      
+         # Check enabled?
+         enabled: true
+         
+         # How close does the players yaw and pitch have to be compared to the calculated look yaw and pitch for it to flag
+         look-difference: 10
+         
+         # How many ticks does the player have to be looking at the villager to flag
+         look-time: 20
+         
+         # How many ticks to test the player for
+         test-time: 120
+         
+         # How much to increase the ticks testing for if the player is looking at the villager, this will allow for more flags and better detection
+         test-time-increase: 180
+
+   # Notify checks, these checks notify you about certain events such as mining diamonds, you will only need to check on them if they are at suspicious intervals.
+   notify:
+      
+      # Checks when players mine diamonds and alerts you how fast they mined them and how many they mined
+      minenotify:
+      
+         # Check enabled?
+         enabled: true
+   

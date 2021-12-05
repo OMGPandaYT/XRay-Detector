@@ -2,12 +2,12 @@ package me.jxydev.xraydetector.checks.impl;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import me.jxydev.xraydetector.XRD;
 import me.jxydev.xraydetector.checks.Check;
 import me.jxydev.xraydetector.data.PlayerData;
 import me.jxydev.xraydetector.events.Event;
@@ -17,6 +17,23 @@ import me.jxydev.xraydetector.util.RotationUtils;
 
 public class MineSight extends Check {
 
+	double lookDifference = 0; // DEFAULT: 10
+	double lookTime = 0; // DEFAULT: 20
+ 	double testTime = 0; // DEFAULT: 120
+	double testTimeIncrease = 0; // DEFAULT: 180
+	
+	public MineSight(FileConfiguration config) {
+		
+		super("MineSight", true, config);
+		
+		lookDifference = config.getDouble(path + "look-difference");
+		lookTime = config.getDouble(path + "look-time");
+		
+		testTime = config.getDouble(path + "test-time");
+		testTimeIncrease = config.getDouble(path + "test-time-increase");
+		
+	}
+	
 	public void onEvent(Event e) {
 		
 		if(e instanceof XRDMove) {
@@ -34,9 +51,9 @@ public class MineSight extends Check {
 				float yaw = l.getYaw() % 360;
 				float pitch = l.getPitch();
 				
-				if(Math.abs(yaw - rotations[0]) < 10 && Math.abs(pitch - rotations[1]) < 10) {
+				if(Math.abs(yaw - rotations[0]) < lookDifference && Math.abs(pitch - rotations[1]) < lookDifference) {
 					
-					if(++pd.entityTime > 20) {
+					if(++pd.entityTime > lookTime) {
 						flag(pd, "&c" + p.getName() + " &eis possibly using Chams or X-Ray.", true);
 						pd.entityTime -= 1;
 					}
@@ -44,12 +61,12 @@ public class MineSight extends Check {
 				} else {
 					pd.entityTime -= pd.entityTime > 3 ? 3 : 0;
 					pd.entityTimeActive++;
-					if(pd.entityTime > 10) {
+					if(pd.entityTime > lookTime / 2) {
 						pd.entityTest = false;
 						killEntity(pd);
 					}
 					
-					if(pd.entityTimeActive > 120 + (pd.entityTime > 10 ? 180 : 0)) {
+					if(pd.entityTimeActive > testTime + (pd.entityTime > lookTime / 2 ? testTimeIncrease : 0)) {
 						pd.entityTest = false;
 						killEntity(pd);
 					}

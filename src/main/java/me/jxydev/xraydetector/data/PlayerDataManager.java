@@ -8,8 +8,10 @@ public class PlayerDataManager {
 
 	private static ConcurrentHashMap<Player, PlayerData> playerData = new ConcurrentHashMap<Player, PlayerData>();
 	
-	public static void createPlayer(Player p) {
-		playerData.put(p, new PlayerData(p));
+	public static PlayerData createPlayer(Player p) {
+		PlayerData pd = new PlayerData(p);
+		playerData.put(p, pd);
+		return pd;
 	}
 	
 	public static void deletePlayer(PlayerData pd) {
