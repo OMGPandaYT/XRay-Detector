@@ -31,6 +31,15 @@ checks:
          
          # How much to increase the ticks testing for if the player is looking at the villager, this will allow for more flags and better detection
          test-time-increase: 180
+         
+      # Checks the yaw of mining for any suspicious actions that baritone does
+      baritone:
+      
+         # Check enabled?
+         enabled: true
+         
+         # How close does the players yaw have to be compared to the normal baritone yaw for it to flag
+         look-difference: 2
 
    # Notify checks, these checks notify you about certain events such as mining diamonds, you will only need to check on them if they are at suspicious intervals.
    notify:

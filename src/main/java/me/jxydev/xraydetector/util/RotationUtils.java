@@ -33,5 +33,17 @@ public class RotationUtils {
 	    } 
 	    return new float[] { yaw, pitch };
 	}
+
+	public static boolean isYawClose(float d1, float d2, float dist) {
+		return isNumberAround(d1, d2, dist);
+	}
+
+	public static boolean isPitchClose(float d1, float d2, float dist) {
+		return isNumberAround(d1, d2, dist);
+	}
+
+	public static boolean isNumberAround(float d1, float d2, float dist) {
+		return Math.abs(d1 - d2) <= dist;
+	}
 	
 }

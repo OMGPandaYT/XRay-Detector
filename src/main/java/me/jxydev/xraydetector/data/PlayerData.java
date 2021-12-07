@@ -36,7 +36,9 @@ public class PlayerData {
 	
 	public long timeSinceDiamond = System.currentTimeMillis();
 	
-	public int diamondsMined, timesPattern, entityTime, entityTimeActive;
+	public int diamondsMined, timesPattern, baritone, baritone2, entityTime, entityTimeActive;
+	
+	public float lastYaw, lastLastYaw;
 	
 	public boolean notify = false, alert = false, entityTest = false;
 	

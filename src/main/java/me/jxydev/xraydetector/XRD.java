@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jxydev.xraydetector.checks.Check;
 import me.jxydev.xraydetector.checks.CheckManager;
+import me.jxydev.xraydetector.checks.impl.Baritone;
 import me.jxydev.xraydetector.checks.impl.MineNotify;
 import me.jxydev.xraydetector.checks.impl.MinePattern;
 import me.jxydev.xraydetector.checks.impl.MineSight;
@@ -95,6 +96,7 @@ public class XRD extends JavaPlugin {
 		
 		new MinePattern(config);
 		new MineSight(config);
+		new Baritone(config);
 		
 	}
 	
